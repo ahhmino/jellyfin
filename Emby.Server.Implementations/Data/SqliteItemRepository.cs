@@ -5780,6 +5780,13 @@ AND Type = @InternalPersonType)");
             if (reader.TryGetString(4, out var language))
             {
                 item.Language = language;
+
+                string i18nKey = "Language" + item.Language;
+                item.LocalizedLanguage = _localization.GetLocalizedString(i18nKey);
+                if (item.LocalizedLanguage.Equals(i18nKey, System.StringComparison.Ordinal))
+                {
+                    item.LocalizedLanguage = null;
+                }
             }
 
             if (reader.TryGetString(5, out var channelLayout))

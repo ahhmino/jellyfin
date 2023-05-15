@@ -678,6 +678,13 @@ namespace MediaBrowser.MediaEncoding.Probing
                 stream.Language = GetDictionaryValue(streamInfo.Tags, "language");
                 stream.Comment = GetDictionaryValue(streamInfo.Tags, "comment");
                 stream.Title = GetDictionaryValue(streamInfo.Tags, "title");
+
+                string i18nKey = "Language" + stream.Language;
+                stream.LocalizedLanguage = _localization == null ? i18nKey : _localization.GetLocalizedString(i18nKey);
+                if (stream.LocalizedLanguage.Equals(i18nKey, System.StringComparison.Ordinal))
+                {
+                    stream.LocalizedLanguage = null;
+                }
             }
 
             if (streamInfo.CodecType == CodecType.Audio)
